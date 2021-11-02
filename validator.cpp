@@ -23,11 +23,15 @@ int main() {
 
 void addTagToList(string s){
     const regex tagSyntax("\\<.*?\\>");
-    smatch match;
-    if (regex_search(s, match, tagSyntax)){
-        for (int i = 0 ; i < match.size(); ++i){
-            tags.push_back(match[i]);
+
+    sregex_iterator iter(s.begin(), s.end(), tagSyntax);
+    sregex_iterator end;
+
+    while(iter != end) {
+        for(unsigned i = 0; i < iter->size(); ++i) {
+            tags.push_back((*iter)[i]);
         }
+        ++iter;
     }
 }
 
