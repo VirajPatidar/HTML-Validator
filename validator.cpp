@@ -3,6 +3,7 @@ using namespace std;
 
 vector<string> tags;
 void addTagToList(string);
+void printTagList();
 
 int main() {
     #ifndef INPUT_OUTPUT
@@ -17,11 +18,7 @@ int main() {
         cout << s << endl;
     }
 
-    for (auto i : tags)
-    {
-        cout << i << endl;
-    }
-    
+    printTagList();
 }
 
 void addTagToList(string s){
@@ -31,5 +28,14 @@ void addTagToList(string s){
         for (int i = 0 ; i < match.size(); ++i){
             tags.push_back(match[i]);
         }
+    }
+}
+
+void printTagList(){
+    cout << "\n------------------------------------------\n";
+    cout << "List of HTML Tags\n";
+    cout << "------------------------------------------\n";
+    for(auto i : tags){
+        cout << i << endl;
     }
 }
