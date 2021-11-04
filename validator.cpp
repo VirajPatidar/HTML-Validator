@@ -1,9 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+vector<string> singleton = {"!DOCTYPE", "link", "meta", "br", "hr", "embed", "img", "input", "source", "col"};
 vector<string> tags;
 int addTagToList(string);
 void printTagList();
+void isClosed();
 
 int main() {
     #ifndef INPUT_OUTPUT
@@ -21,9 +23,40 @@ int main() {
         }
         cout << s << endl;
     }
-
+    isClosed();
     printTagList();
 }
+
+void isClosed(){
+    stack<string> stack;
+    for(auto i : tags){
+        bool isInVect=false;
+        string s = i.substr(1, (i.find_first_of(" >"))-1);
+        isInVect = find(singleton.begin(), singleton.end(), s) != singleton.end();
+        if(isInVect == true){
+            continue;
+        }
+        char n=i[1];
+        if(n!='/'){
+            stack.push(i);
+        }
+        else{
+            string newstring = stack.top().substr(1, (stack.top().find_first_of(" >"))-1);
+            if(i.substr(2, (i.size()-3)) == newstring){
+                stack.pop();
+            }
+            else{
+                cout << "\nError: No closing tag found for "+ stack.top() << endl;
+                exit(0);  
+            }
+        }
+    }
+    if(!stack.empty()){
+        cout << "^Error: No closing tag found for "+ stack.top()<<endl;
+        exit(0); 
+    }
+}
+
 
 bool isValidHTMLTag(string str) {
     // Function is not checking all cases
