@@ -49,6 +49,10 @@ void isClosed(){
             stack.push(i);
         }
         else{
+            if(stack.empty() && i=="</html>"){
+                cout << "\nError: No opeing tag found for "+ i << endl;
+                exit(0);
+            }
             string newstring = stack.top().substr(1, (stack.top().find_first_of(" >"))-1);
             if(i.substr(2, (i.size()-3)) == newstring){
                 stack.pop();
@@ -64,9 +68,10 @@ void isClosed(){
                 }
             }
         }
+        
     }
     if(!stack.empty()){
-        cout << "^Error: No closing tag found for "+ stack.top()<<endl;
+        cout << "\nError: No closing tag found for "+ stack.top()<<endl;
         exit(0); 
     }
 }
