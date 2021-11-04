@@ -27,6 +27,14 @@ int main() {
     printTagList();
 }
 
+bool find(stack<string> stack, string i){
+    while (!stack.empty() && stack.top().substr(1, (stack.top().find_first_of(" >"))-1) != i.substr(2, (i.size()-3)))
+        stack.pop();
+    if (!stack.empty())
+        return true;
+    return false;
+}
+
 void isClosed(){
     stack<string> stack;
     for(auto i : tags){
@@ -46,8 +54,14 @@ void isClosed(){
                 stack.pop();
             }
             else{
-                cout << "\nError: No closing tag found for "+ stack.top() << endl;
-                exit(0);  
+                if(!find(stack, i)){
+                   cout << "\nError: No opening tag found for "+ i << endl;
+                   exit(0); 
+                }
+                else{
+                    cout << "\nError: No closing tag found for "+ stack.top() << endl;
+                    exit(0);
+                }
             }
         }
     }
