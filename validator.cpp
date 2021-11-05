@@ -5,7 +5,7 @@ vector<string> singleton = {"!DOCTYPE", "link", "meta", "br", "hr", "embed", "im
 vector<string> tags;
 int addTagToList(string);
 void printTagList();
-void isClosed();
+void checkOpeningClosing();
 
 int main() {
     #ifndef INPUT_OUTPUT
@@ -23,7 +23,7 @@ int main() {
         }
         cout << s << endl;
     }
-    isClosed();
+    checkOpeningClosing();
     printTagList();
 }
 
@@ -35,7 +35,7 @@ bool find(stack<string> stack, string i){
     return false;
 }
 
-void isClosed(){
+void checkOpeningClosing(){
     stack<string> stack;
     for(auto i : tags){
         bool isInVect=false;
@@ -50,7 +50,7 @@ void isClosed(){
         }
         else{
             if(stack.empty() && i=="</html>"){
-                cout << "\nError: No opeing tag found for "+ i << endl;
+                cout << "\nError: No opening tag found for "+ i << endl;
                 exit(0);
             }
             string newstring = stack.top().substr(1, (stack.top().find_first_of(" >"))-1);
