@@ -13,31 +13,6 @@
 </body>
 </html>
 
-------------------------------------------
-List of HTML Tags
-------------------------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>
-</title>
-</head>
-<body>
-<h1>
-</h1>
-<p>
-</p>
-</body>
-</html>
-------------------------------------------
-------------------------------------------
-<meta charset="UTF-8">, meta, 1
-<meta http-equiv="X-UA-Compatible" content="IE=edge">, meta, 1
-<meta name="viewport" content="width=device-width, initial-scale=1.0">, meta, 1
-<title>, meta, 4294967295
-<title>, title, 1
-</title>, meta, 4294967295
-</title>, title, 2
+==============================================
+Compilation Successful: No syntax errors found
+==============================================
