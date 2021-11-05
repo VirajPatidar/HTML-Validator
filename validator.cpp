@@ -15,6 +15,7 @@ vector<string> elements = {"a", "abbr", "acronym", "address", "applet", "area", 
 int addTagToList(string);
 void printTagList();
 void checkOpeningClosing();
+int checkOrder();
 
 int main() {
     #ifndef INPUT_OUTPUT
@@ -36,6 +37,10 @@ int main() {
     }
 
     checkOpeningClosing();
+    if(checkOrder() == 1){
+        cout << "^Error: Invalid HTML tag syntax caught above";
+        exit(0);
+    }
     cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
     //printTagList();
 }
@@ -122,8 +127,8 @@ int checkOrder() {
 
         if(flag1 == 0) {
             for(auto j : head_tags) {
-                cout << i << ", " << j << ", ";
-                cout << i.find(j) << endl;
+                // cout << i << ", " << j << ", ";
+                // cout << i.find(j) << endl;
                 if(i.find(j) != 4294967295) {
                     flag2 = 1;
                     break;
