@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-//try adding body tag here
+<!--try adding body tag here-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +8,10 @@
     <title>HTML Page</title>
 </head>
 <body> 
-    //replace above line with 'body and run again
+    <!--replace above line with 'body and run again-->
     <h1>First Heading</h1>
     <p>First paragraph.</p>
 </body>
 </html>
-<meta charset="UTF-8">, meta, 1
-<meta http-equiv="X-UA-Compatible" content="IE=edge">, meta, 1
-<meta name="viewport" content="width=device-width, initial-scale=1.0">, meta, 1
-<title>, meta, 4294967295
-<title>, title, 1
-</title>, meta, 4294967295
-</title>, title, 2
 
-==============================================
-Compilation Successful: No syntax errors found
-==============================================
+Error: No closing tag found for <!--replace above line with 'body and run again-->

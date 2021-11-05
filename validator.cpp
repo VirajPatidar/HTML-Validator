@@ -17,6 +17,7 @@ void printTagList();
 void checkOpeningClosing();
 int checkOrder();
 
+
 int main() {
     #ifndef INPUT_OUTPUT
         freopen("input.txt", "r", stdin);
@@ -36,14 +37,17 @@ int main() {
         cout << s << endl;
     }
 
-    checkOpeningClosing();
     if(checkOrder() == 1){
-        cout << "^Error: Invalid HTML tag syntax caught above";
+        cout << "^Error: Invalid HTML tag syntax caught above\n";
         exit(0);
     }
+
+    checkOpeningClosing();
+
     cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
     //printTagList();
 }
+
 
 
 /* ===== Checking HTML tag and attribute syntax ===== */
@@ -81,66 +85,25 @@ bool isValidHTMLTag(string str) {
         if(opening == "!DOCTYPE html") {
             return true;
         }
+
+        if(opening.find("!--") == 0) {
+            if (opening[opening.size()-1] == '-' && opening[opening.size()-2] == '-') {
+                return true;
+            }
+            return false;
+        }
+
         string opening_element = str.substr(1, (str.find_first_of(" >")) - 1);
         size_t attr = opening.find(" ");
-        if (attr != string::npos){
-            return checkAttribute(opening.substr((opening.find(" ")+1), (opening.size()-1)));
-        }
         if(find(elements.begin(), elements.end(), opening_element) == elements.end()) {
             return false;
+        }
+        if (attr != string::npos){
+            return checkAttribute(opening.substr((opening.find(" ")+1), (opening.size()-1)));
         }
     }
 
     return true;
-}
-
-int checkOrder() {
-    
-    if(tags[0] != "<!DOCTYPE html>") {
-        cout << "^Error: '<!DOCTYPE html>' tag not included.";
-        return 1;
-    }
-    if(tags[1].find("html") == 4294967295) {
-        cout << "^Error: '<html>' tag not initialized.";
-        return 1;
-    }
-    int flag1 = -1;
-    int flag2 = 0;
-    char * head_tags[2] = {"meta", "title"};
-    
-    for(auto i : tags){
-        
-        flag2 = 0;
-        if(i == "<head>") {
-            flag1 = 0;
-            continue;
-        }
-        if(i == "</head>") {
-            flag1 = 1;
-            continue;
-        }
-
-        if(flag1 == -1 && i == "<body>") {
-            cout << "^Error: <body> tag must come after </head> tag.";
-            return 1;
-        }
-
-        if(flag1 == 0) {
-            for(auto j : head_tags) {
-                // cout << i << ", " << j << ", ";
-                // cout << i.find(j) << endl;
-                if(i.find(j) != 4294967295) {
-                    flag2 = 1;
-                    break;
-                }
-            }
-            if(flag2 == 0) {
-                cout << "^Error: "<< i <<" tag must not come inside <head> tag.";
-                return 1;
-            }
-        }
-    }
-    return 0;
 }
 
 int addTagToList(string s){
@@ -162,9 +125,61 @@ int addTagToList(string s){
         }
         ++iter;
     }
-
     return 0;
 }
+
+
+
+/* ===== Checking order of HTML tags in DOM ===== */
+int checkOrder() {
+    
+    if(tags[0] != "<!DOCTYPE html>") {
+        cout << "\n^Error: '<!DOCTYPE html>' tag not included.\n";
+        return 1;
+    }
+    if(tags[1].find("html") == 4294967295) {
+        cout << "\n^Error: '<html>' tag not initialized.\n";
+        return 1;
+    }
+    int flag1 = -1;
+    int flag2 = 0;
+    string head_tags[2] = {"meta", "title"};
+    
+    for(auto i : tags){
+        
+        flag2 = 0;
+        if(i == "<head>") {
+            flag1 = 0;
+            continue;
+        }
+        if(i == "</head>") {
+            flag1 = 1;
+            continue;
+        }
+
+        if(flag1 == -1 && i == "<body>") {
+            cout << "\n^Error: <body> tag must come after </head> tag.\n";
+            return 1;
+        }
+
+        if(flag1 == 0) {
+            for(auto j : head_tags) {
+                // cout << i << ", " << j << ", ";
+                // cout << i.find(j) << endl;
+                if(i.find(j) != 4294967295) {
+                    flag2 = 1;
+                    break;
+                }
+            }
+            if(flag2 == 0) {
+                cout << "\n^Error: "<< i <<" tag must not come inside <head> tag.\n";
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 
 
 /* ===== Checking Opening and Closing Tags ===== */

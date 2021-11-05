@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-//try adding body tag here
+<!--try adding body tag here-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <title>HTML Page</title>
 </head>
 <body> 
-    //replace above line with 'body and run again
+    <!--replace above line with 'body and run again-->
     <h1>First Heading</h1>
     <p>First paragraph.</p>
 </body>
