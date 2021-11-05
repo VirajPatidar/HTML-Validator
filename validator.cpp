@@ -36,11 +36,34 @@ int main() {
     }
 
     checkOpeningClosing();
+    cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
     //printTagList();
 }
 
 
 /* ===== Checking HTML tag and attribute syntax ===== */
+bool checkAttribute(string str) {
+    int equal=0, quote=0;
+    char c;
+    stack<char> symbol;
+    for (int i = 0; i < str.size(); i++) {
+        if(str[i] == '=' || str[i] == '"'){
+            symbol.push(str[i]);
+        }
+    }
+    while (!symbol.empty()) {
+        c = symbol.top();
+        if (c == '"') {
+            quote++;
+        }
+        else if(c == '=' && quote%2 == 0){
+            equal++;
+        }
+        symbol.pop();
+    }
+    return (quote == 2*equal) ;    
+}
+
 bool isValidHTMLTag(string str) {
     if(str[1] == '/'){
         string closing = str.substr(2, (str.size()-3));
@@ -54,6 +77,10 @@ bool isValidHTMLTag(string str) {
             return true;
         }
         string opening_element = str.substr(1, (str.find_first_of(" >")) - 1);
+        size_t attr = opening.find(" ");
+        if (attr != string::npos){
+            return checkAttribute(opening.substr((opening.find(" ")+1), (opening.size()-1)));
+        }
         if(find(elements.begin(), elements.end(), opening_element) == elements.end()) {
             return false;
         }
