@@ -200,6 +200,9 @@ void checkOpeningClosing(){
         if(isInVect == true){
             continue;
         }
+        if(i.substr(0,4)=="<!--"){
+            continue;
+        }
         char n=i[1];
         if(n!='/'){
             stack.push(i);
