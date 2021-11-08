@@ -11,6 +11,14 @@ vector<string> elements = {"a", "abbr", "acronym", "address", "applet", "area", 
                            "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strike", "strong", "style", "sub", 
                            "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", 
                            "var", "video", "wbr"};
+vector<string> body_valid_tags = {"a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", 
+                           "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", 
+                           "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2",
+                           "h3", "h4", "h5", "h6", "header", "hr", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend", "li", "link", "main", 
+                           "map", "mark", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", 
+                           "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strike", "strong", "style", "sub", 
+                           "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", 
+                           "var", "video", "wbr",  "link", "meta", "br", "hr", "embed", "img", "input", "source", "col"};
 
 int addTagToList(string);
 void printTagList();
@@ -37,6 +45,7 @@ int main() {
     }
 
     checkOpeningClosing();
+    // printTagList();
     if(checkOrder() == 1){
         cout << "^Error: Invalid HTML tag syntax caught above";
         exit(0);
@@ -95,7 +104,7 @@ bool isValidHTMLTag(string str) {
 }
 
 int checkOrder() {
-    
+
     if(tags[0] != "<!DOCTYPE html>") {
         cout << "^Error: '<!DOCTYPE html>' tag not included.";
         return 1;
@@ -104,38 +113,63 @@ int checkOrder() {
         cout << "^Error: '<html>' tag not initialized.";
         return 1;
     }
-    int flag1 = -1;
-    int flag2 = 0;
+    int head_flag2 = -1;
+    int head_flag1 = 0;
+    int body_flag1 = 0;
+    int body_flag2 = 0;
     char * head_tags[2] = {"meta", "title"};
     
     for(auto i : tags){
-        
-        flag2 = 0;
+
+        body_flag2 = 0;
+        head_flag2 = 0;
         if(i == "<head>") {
-            flag1 = 0;
+            head_flag1 = 1;
             continue;
         }
         if(i == "</head>") {
-            flag1 = 1;
+            head_flag1 = 0;
             continue;
         }
 
-        if(flag1 == -1 && i == "<body>") {
+        if(i == "<body>") {
+            body_flag1 = 1;
+            continue;
+        }
+        if(i == "</body>") {
+            body_flag1 = 0;
+            continue;
+        }
+
+        if(head_flag1 == -1 && i == "<body>") {
             cout << "^Error: <body> tag must come after </head> tag.";
             return 1;
         }
 
-        if(flag1 == 0) {
+        if(head_flag1 == 1) {
             for(auto j : head_tags) {
-                // cout << i << ", " << j << ", ";
-                // cout << i.find(j) << endl;
                 if(i.find(j) != 4294967295) {
-                    flag2 = 1;
+                    head_flag2 = 1;
                     break;
                 }
             }
-            if(flag2 == 0) {
+            if(head_flag2 == 0) {
                 cout << "^Error: "<< i <<" tag must not come inside <head> tag.";
+                return 1;
+            }
+        }
+
+        if(body_flag1 == 0 && head_flag1 == 0) {
+            for(auto j : body_valid_tags) {
+                int pos = i.find(" ");
+                string s = i.substr(1, pos-1);
+                if(s.find(j) != 4294967295) {
+                    body_flag2 = 1;
+                    break;
+                }
+            }
+            if(body_flag2 == 1) {
+                cout << "^Error: "<< i <<" tag must come inside <body> tag.";
                 return 1;
             }
         }
