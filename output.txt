@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-//try adding body tag here
-<h1></h1>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +7,12 @@
     <title>HTML Page</title>
 </head>
 <body> 
-    //replace above line with 'body and run again
+    <!--replace above line with 'body and run again-->
     <h1>First Heading</h1>
     <p>First paragraph.</p>
 </body>
 </html>
-^Error: <h1> tag must come inside <body> tag.^Error: Invalid HTML tag syntax caught above
+
+==============================================
+Compilation Successful: No syntax errors found
+==============================================

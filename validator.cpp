@@ -25,6 +25,7 @@ void printTagList();
 void checkOpeningClosing();
 int checkOrder();
 
+
 int main() {
     #ifndef INPUT_OUTPUT
         freopen("input.txt", "r", stdin);
@@ -47,12 +48,16 @@ int main() {
     checkOpeningClosing();
     // printTagList();
     if(checkOrder() == 1){
-        cout << "^Error: Invalid HTML tag syntax caught above";
+        cout << "^Error: Invalid HTML tag syntax caught above\n";
         exit(0);
     }
+
+    checkOpeningClosing();
+
     cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
     //printTagList();
 }
+
 
 
 /* ===== Checking HTML tag and attribute syntax ===== */
@@ -90,27 +95,60 @@ bool isValidHTMLTag(string str) {
         if(opening == "!DOCTYPE html") {
             return true;
         }
+
+        if(opening.find("!--") == 0) {
+            if (opening[opening.size()-1] == '-' && opening[opening.size()-2] == '-') {
+                return true;
+            }
+            return false;
+        }
+
         string opening_element = str.substr(1, (str.find_first_of(" >")) - 1);
         size_t attr = opening.find(" ");
-        if (attr != string::npos){
-            return checkAttribute(opening.substr((opening.find(" ")+1), (opening.size()-1)));
-        }
         if(find(elements.begin(), elements.end(), opening_element) == elements.end()) {
             return false;
+        }
+        if (attr != string::npos){
+            return checkAttribute(opening.substr((opening.find(" ")+1), (opening.size()-1)));
         }
     }
 
     return true;
 }
 
+int addTagToList(string s){
+    const regex tagSyntax("\\<.*?\\>");
+
+    int tagCount = 0;
+    sregex_iterator iter(s.begin(), s.end(), tagSyntax);
+    sregex_iterator end;
+
+    while(iter != end) {
+        for(unsigned i = 0; i < iter->size(); ++i) {
+            if(isValidHTMLTag((*iter)[i])) {
+                tags.push_back((*iter)[i]);
+                tagCount++;
+            }
+            else{
+                return 1;
+            }
+        }
+        ++iter;
+    }
+    return 0;
+}
+
+
+
+/* ===== Checking order of HTML tags in DOM ===== */
 int checkOrder() {
 
     if(tags[0] != "<!DOCTYPE html>") {
-        cout << "^Error: '<!DOCTYPE html>' tag not included.";
+        cout << "\n^Error: '<!DOCTYPE html>' tag not included.\n";
         return 1;
     }
     if(tags[1].find("html") == 4294967295) {
-        cout << "^Error: '<html>' tag not initialized.";
+        cout << "\n^Error: '<html>' tag not initialized.\n";
         return 1;
     }
     int head_flag2 = -1;
@@ -177,28 +215,6 @@ int checkOrder() {
     return 0;
 }
 
-int addTagToList(string s){
-    const regex tagSyntax("\\<.*?\\>");
-
-    int tagCount = 0;
-    sregex_iterator iter(s.begin(), s.end(), tagSyntax);
-    sregex_iterator end;
-
-    while(iter != end) {
-        for(unsigned i = 0; i < iter->size(); ++i) {
-            if(isValidHTMLTag((*iter)[i])) {
-                tags.push_back((*iter)[i]);
-                tagCount++;
-            }
-            else{
-                return 1;
-            }
-        }
-        ++iter;
-    }
-
-    return 0;
-}
 
 
 /* ===== Checking Opening and Closing Tags ===== */
@@ -217,6 +233,9 @@ void checkOpeningClosing(){
         string s = i.substr(1, (i.find_first_of(" >"))-1);
         isInVect = find(singleton.begin(), singleton.end(), s) != singleton.end();
         if(isInVect == true){
+            continue;
+        }
+        if(i.substr(0,4)=="<!--"){
             continue;
         }
         char n=i[1];
