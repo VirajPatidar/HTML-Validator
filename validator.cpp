@@ -201,7 +201,7 @@ int checkOrder() {
                 // cout << i << ", " << j << ", ";
                 // cout << i.find(j) << endl;
                 // cout << head_flag1 << endl;
-                if(i.find(j) != 4294967295) {
+                if (i.find(j) != string::npos) {
                     head_flag2 = 1;
                     break;
                 }
@@ -216,7 +216,7 @@ int checkOrder() {
             for(auto j : body_valid_tags) {
                 int pos = i.find(" ");
                 string s = i.substr(1, pos-1);
-                if(s.find(j) != 4294967295) {
+                if (s.find(j) != string::npos) {
                     body_flag2 = 1;
                     break;
                 }
