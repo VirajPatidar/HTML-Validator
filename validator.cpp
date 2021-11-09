@@ -198,9 +198,9 @@ int checkOrder() {
 
         if(head_flag1 == 1) {
             for(auto j : head_tags) {
-                cout << i << ", " << j << ", ";
-                cout << i.find(j) << endl;
-                cout << head_flag1 << endl;
+                // cout << i << ", " << j << ", ";
+                // cout << i.find(j) << endl;
+                // cout << head_flag1 << endl;
                 if(i.find(j) != 4294967295) {
                     head_flag2 = 1;
                     break;
