@@ -6,12 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML Page</title>
 </head>
-<body> 
+<body>
     <!--replace above line with 'body and run again-->
     <h1>First Heading</h1>
     <p>First paragraph.</p>
 </body>
+<html></html>
 </html>
+
+------------------------------------------
+List of HTML Tags
+------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+</title>
+</head>
+<body>
+<!--replace above line with 'body and run again-->
+<h1>
+</h1>
+<p>
+</p>
+</body>
+<html>
+</html>
+</html>
+------------------------------------------
+------------------------------------------
+<meta charset="UTF-8">, meta, 1
+1
+<meta http-equiv="X-UA-Compatible" content="IE=edge">, meta, 1
+1
+<meta name="viewport" content="width=device-width, initial-scale=1.0">, meta, 1
+1
+<title>, meta, 4294967295
+1
+<title>, title, 1
+1
+</title>, meta, 4294967295
+1
+</title>, title, 2
+1
 
 ==============================================
 Compilation Successful: No syntax errors found

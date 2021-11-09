@@ -46,9 +46,8 @@ int main() {
     }
 
     checkOpeningClosing();
-    // printTagList();
+    printTagList();
     if(checkOrder() == 1){
-        cout << "^Error: Invalid HTML tag syntax caught above\n";
         exit(0);
     }
 
@@ -152,29 +151,42 @@ int checkOrder() {
         return 1;
     }
     int head_flag2 = -1;
-    int head_flag1 = 0;
-    int body_flag1 = 0;
-    int body_flag2 = 0;
-    char * head_tags[2] = {"meta", "title"};
-    
+    int head_flag1 = -1;
+    int body_flag1 = -1;
+    int body_flag2 = -1;
+    string head_tags[] = {"meta", "title", "head"};
     for(auto i : tags){
 
         body_flag2 = 0;
         head_flag2 = 0;
-        if(i == "<head>") {
+
+        if(i == "<head>" && head_flag1 == 0) {
+            cout << "^Error: <head> tage already initialized";
+            return 1;
+        }
+        if(i == "<body>" && body_flag1 == 0) {
+            cout << "^Error: <body> tage already initialized";
+            return 1;
+        }
+
+        if(i == "<head>" && body_flag1 != 1) {
             head_flag1 = 1;
             continue;
         }
-        if(i == "</head>") {
+        if(i == "</head>" && body_flag1 != 1) {
             head_flag1 = 0;
             continue;
         }
 
-        if(i == "<body>") {
+        if(i == "<body>" && head_flag1 != 1) {
             body_flag1 = 1;
             continue;
         }
-        if(i == "</body>") {
+        if(i == "</body>" && head_flag1 != 1) {
+            body_flag1 = 0;
+            continue;
+        }
+        if(i == "</body>" && head_flag1 != 1) {
             body_flag1 = 0;
             continue;
         }
@@ -186,6 +198,9 @@ int checkOrder() {
 
         if(head_flag1 == 1) {
             for(auto j : head_tags) {
+                cout << i << ", " << j << ", ";
+                cout << i.find(j) << endl;
+                cout << head_flag1 << endl;
                 if(i.find(j) != 4294967295) {
                     head_flag2 = 1;
                     break;
@@ -197,7 +212,7 @@ int checkOrder() {
             }
         }
 
-        if(body_flag1 == 0 && head_flag1 == 0) {
+        if(body_flag1 != 1 && head_flag1 != 1) {
             for(auto j : body_valid_tags) {
                 int pos = i.find(" ");
                 string s = i.substr(1, pos-1);
