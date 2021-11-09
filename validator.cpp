@@ -46,14 +46,13 @@ int main() {
     }
 
     checkOpeningClosing();
+    
     if(checkOrder() == 1){
         exit(0);
     }
 
-    checkOpeningClosing();
-
     cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
-    //printTagList();
+    printTagList();
 }
 
 
@@ -156,6 +155,10 @@ int checkOrder() {
     string head_tags[] = {"meta", "title", "head"};
     for(auto i : tags){
 
+        if(i.substr(0,4)=="<!--"){
+            continue;
+        }
+        
         body_flag2 = 0;
         head_flag2 = 0;
 
