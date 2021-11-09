@@ -46,7 +46,7 @@ int main() {
     }
 
     checkOpeningClosing();
-    printTagList();
+
     if(checkOrder() == 1){
         exit(0);
     }
@@ -146,7 +146,7 @@ int checkOrder() {
         cout << "\n^Error: '<!DOCTYPE html>' tag not included.\n";
         return 1;
     }
-    if(tags[1].find("html") == 4294967295) {
+    if(tags[1].find("html") == string::npos) {
         cout << "\n^Error: '<html>' tag not initialized.\n";
         return 1;
     }
