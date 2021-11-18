@@ -53,7 +53,7 @@ int main() {
     }
 
     cout << "\n==============================================\nCompilation Successful: No syntax errors found\n==============================================";
-    printTagList();
+    // printTagList();
 }
 
 
@@ -153,7 +153,7 @@ int checkOrder() {
     int head_flag1 = -1;
     int body_flag1 = -1;
     int body_flag2 = -1;
-    string head_tags[] = {"meta", "title", "head"};
+    string head_tags[] = {"meta", "title", "head", "link"};
     for(auto i : tags){
 
         if(i.substr(0,4)=="<!--"){
@@ -162,15 +162,6 @@ int checkOrder() {
         
         body_flag2 = 0;
         head_flag2 = 0;
-
-        if(i == "<head>" && head_flag1 == 0) {
-            cout << "^Error: <head> tage already initialized";
-            return 1;
-        }
-        if(i == "<body>" && body_flag1 == 0) {
-            cout << "^Error: <body> tage already initialized";
-            return 1;
-        }
 
         if(i == "<head>" && body_flag1 != 1) {
             head_flag1 = 1;
@@ -192,6 +183,15 @@ int checkOrder() {
         if(i == "</body>" && head_flag1 != 1) {
             body_flag1 = 0;
             continue;
+        }
+
+        if(body_flag1 == 1) {
+            for(auto j : head_tags) {
+                if (i.find(j) != string::npos) {
+                    cout << "^Error: " << j << " tag cannot be inside <body> tag.";
+                    return 1;
+                }
+            }
         }
 
         if(head_flag1 == -1 && i == "<body>") {
