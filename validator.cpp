@@ -3,6 +3,7 @@ using namespace std;
 
 vector<string> tags;
 vector<string> singleton = {"!DOCTYPE", "link", "meta", "br", "hr", "embed", "img", "input", "source", "col"};
+vector<string> onlyonetag = {"html","head","title","body"};
 vector<string> elements = {"a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", 
                            "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", 
                            "dialog", "dir", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2",
@@ -245,9 +246,23 @@ bool find(stack<string> stack, string i){
 
 void checkOpeningClosing(){
     stack<string> stack;
+    vector<string> checkOnlyOneArray;
     for(auto i : tags){
         bool isInVect=false;
+        bool isInOnlyOneTag=false;
         string s = i.substr(1, (i.find_first_of(" >"))-1);
+        isInOnlyOneTag = find(onlyonetag.begin(), onlyonetag.end(), s) != onlyonetag.end();
+        if(isInOnlyOneTag==true){
+            bool isInCheckOnlyOneArray=false;
+            isInCheckOnlyOneArray = find(checkOnlyOneArray.begin(), checkOnlyOneArray.end(), s) != checkOnlyOneArray.end();
+            if(isInCheckOnlyOneArray==true){
+                cout << "\nError: "<< i << " tag already intialised";
+                exit(0);
+            }
+            else{
+                checkOnlyOneArray.push_back(s); 
+            }
+        }
         isInVect = find(singleton.begin(), singleton.end(), s) != singleton.end();
         if(isInVect == true){
             continue;
