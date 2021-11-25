@@ -29,7 +29,7 @@ int checkOrder();
 
 int main() {
     #ifndef INPUT_OUTPUT
-        freopen("input.txt", "r", stdin);
+        freopen("input1.txt", "r", stdin);
         freopen("output.txt", "w", stdout);
     #endif
 
