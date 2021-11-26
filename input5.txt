@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <h4>Vedant Nakrani</h4>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HTML Page</title>
+    </head>
+    <body>
+        <h1 id="main" class="topic">HTML Validator</h1>
+        <p>A program to check whether given HTML code is valid or not by checking:
+            (1) HTML tags syntax
+            (2) Attributes syntax for tags
+            (3) Order of tags in DOM
+            (4) Opening and closing tags</p>
+        <!-- This is a HTML comment-->
+        <span>Group Members:</span>
+        <ul>
+            <li>Viraj Patidar</li>
+            <li>Vedant Nakrani</li>
+            <li>Atharva Patil</li>
+        </ul>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam asperiores numquam laborum ducimus nemo consequuntur obcaecati. Est suscipit temporibus magni!</p>
+    </body>
+</html>
